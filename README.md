@@ -1,58 +1,85 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# AgriTani
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Marketplace hasil pertanian** yang mempertemukan petani langsung dengan pembeli, dibangun dengan Laravel 12 dan MySQL.
 
-## About Laravel
+## Daftar Isi
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [Tujuan Proyek](#tujuan-proyek)
+- [Gambaran Web](#gambaran-web)
+- [Fitur](#fitur)
+- [Teknis](#teknis)
+- [Pembagian Modul](#pembagian-modul)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tujuan Proyek
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. **Mempertemukan petani langsung dengan pembeli.** Petani bisa menjual hasil panen secara online tanpa perantara.
+2. **Memberi petani alat berjualan yang lengkap.** Mulai dari mengelola produk, memproses pesanan, mengonfirmasi pembayaran, sampai mengirim barang dan melihat laporan penjualan.
+3. **Menjaga kualitas dan kepercayaan platform.** Admin memoderasi petani, produk, dan ulasan.
 
-## Learning Laravel
+## Gambaran Web
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Ada tiga peran dengan dashboard masing-masing:
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Peran   | Tugas                                                        |
+|---------|--------------------------------------------------------------|
+| Pembeli | Menelusuri katalog, berbelanja, membayar, dan memberi ulasan |
+| Petani  | Menjual produk dan mengurus pesanan sampai terkirim          |
+| Admin   | Mengawasi seluruh platform                                   |
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### Alur Utama
 
-## Agentic Development
+1. Pembeli memilih produk, memasukkannya ke keranjang, lalu checkout.
+2. Pembeli membayar (transfer atau COD).
+3. Petani mengonfirmasi pesanan dan pembayaran, lalu mengirim barang.
+4. Setelah barang tiba, pembeli menyelesaikan pesanan dan menulis ulasan.
+5. Admin menyetujui ulasan tersebut sebelum tampil.
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Fitur
 
-```bash
-composer require laravel/boost --dev
+### Umum / Publik
 
-php artisan boost:install
-```
+- Katalog produk di halaman depan, dan halaman detail produk yang menampilkan rating dan ulasan yang sudah disetujui.
+- Registrasi, login, dan logout.
+- Setelah login, pengguna diarahkan ke dashboard sesuai perannya.
+- Edit profil dan ganti password.
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### Pembeli
 
-## Contributing
+- **Keranjang:** tambah, ubah jumlah, dan hapus item.
+- **Checkout:** alamat kirim, catatan, dan ongkir tetap yang bisa diatur lewat `AGRITANI_SHIPPING_COST` (bawaan Rp10.000).
+- **Pesanan:** daftar dan detail pesanan, upload bukti transfer, batalkan pesanan, dan tandai selesai.
+- **Ulasan:** beri rating 1-5 dan komentar. Hanya bisa setelah pesanan selesai, dan ulasan bisa diedit.
+- **Dashboard** ringkasan.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Petani
 
-## Code of Conduct
+- **Produk:** tambah, ubah, dan hapus produk. Data produk mencakup harga, stok, satuan, berat, dan foto. Produk juga bisa diaktifkan atau dinonaktifkan.
+- **Pesanan:** lihat pesanan yang masuk, lalu konfirmasi atau tolak.
+- **Pembayaran:** konfirmasi atau tolak bukti pembayaran.
+- **Pengiriman:** isi kurir, nomor resi, dan perkiraan tiba, lalu tandai sudah tiba.
+- **Laporan penjualan** dengan fitur export, dan dashboard statistik.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Admin
 
-## Security Vulnerabilities
+- **Kelola petani:** aktifkan atau nonaktifkan akun.
+- **Kelola produk:** moderasi dan suspend produk, lengkap dengan alasan suspend.
+- **Kelola kategori:** CRUD kategori.
+- **Pantau** semua pesanan di seluruh platform.
+- **Moderasi ulasan:** setujui atau tolak.
+- **Laporan platform** dengan export, dan dashboard statistik.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Teknis
 
-## License
+- Akses dibatasi per peran lewat `RoleMiddleware`.
+- Route dipisah per modul di `routes/modules/`.
+- Test dipisah per modul (Core, PetaniProduk, Pesanan, PembayaranPengiriman, Laporan, Ulasan), dan berjalan di SQLite in-memory.
+- `DemoSeeder` menyediakan data contoh untuk mengisi dashboard dan laporan.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Pembagian Modul
+
+| Modul                             | Penanggung jawab |
+|-----------------------------------|------------------|
+| Manajemen Petani & Produk         | Dana             |
+| Manajemen Pesanan                 | Bagas            |
+| Pengiriman & Pembayaran           | Ilham            |
+| Laporan                           | Hafid            |
