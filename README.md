@@ -1,4 +1,4 @@
-# AgriTani
+# TaniMart
 
 **Marketplace hasil pertanian** yang mempertemukan petani langsung dengan pembeli, dibangun dengan Laravel 12 dan MySQL.
 
