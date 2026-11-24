@@ -1,7 +1,3 @@
-{{--
-    Isi laporan penjualan yang dipakai petani dan admin.
-    Variabel: $route (nama route laporan), $rows, $from, $to, $status, $summary, $topProducts.
---}}
 <form method="GET" action="{{ route($route) }}" class="card mb-4 no-print">
     <div class="card-body">
         <div class="row g-3 align-items-end">

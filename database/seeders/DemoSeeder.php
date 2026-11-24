@@ -8,10 +8,6 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-/**
- * Data contoh untuk mencoba dashboard: pesanan dalam berbagai status beserta pembayaran dan resi pengiriman.
- * Jalankan: php artisan db:seed --class=DemoSeeder  (aman diulang; dilewati jika pesanan sudah ada)
- */
 class DemoSeeder extends Seeder
 {
     public function run(): void
@@ -26,8 +22,6 @@ class DemoSeeder extends Seeder
 
         $buyer = User::where('email', 'pembeli@tanimart.test')->firstOrFail();
 
-        // [status, metode, status bayar, [[slug, qty], ...], hari lalu]
-        // Satu pesanan = satu petani (produk berselang-seling per petani lihat ProductSeeder).
         $plans = [
             ['selesai', 'transfer', 'dikonfirmasi', [['bayam-hijau', 3], ['tomat-merah', 2]], 12],
             ['selesai', 'cod', 'dikonfirmasi', [['mangga-harum-manis', 2]], 9],
@@ -42,7 +36,6 @@ class DemoSeeder extends Seeder
         foreach ($plans as [$status, $method, $payStatus, $lines, $daysAgo]) {
             $products = collect($lines)->map(fn ($l) => [Product::where('slug', $l[0])->firstOrFail(), $l[1]]);
 
-            // Pecah per petani agar sesuai aturan "satu pesanan = satu petani".
             foreach ($products->groupBy(fn ($p) => $p[0]->user_id) as $group) {
                 $subtotal = $group->sum(fn ($p) => $p[0]->price * $p[1]);
                 $order = Order::create([
@@ -69,7 +62,6 @@ class DemoSeeder extends Seeder
                     'confirmed_at' => $payStatus === 'dikonfirmasi' ? now()->subDays($daysAgo) : null,
                 ]);
 
-                // Resi pengiriman disimpan langsung di tabel orders.
                 if (in_array($status, ['dikirim', 'selesai'], true)) {
                     $order->forceFill([
                         'courier' => 'JNE',

@@ -12,10 +12,6 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-/**
- * Anggota 4: pesanan dikirim otomatis selesai setelah batas hari (bawaan 7)
- * jika pembeli tidak menekan "Pesanan Diterima".
- */
 class SelesaiOtomatisTest extends TestCase
 {
     use RefreshDatabase;

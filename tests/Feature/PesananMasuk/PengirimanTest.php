@@ -11,9 +11,6 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-/**
- * Anggota 4: resi pengiriman dan alur pesanan sampai selesai.
- */
 class PengirimanTest extends TestCase
 {
     use RefreshDatabase;
@@ -37,7 +34,6 @@ class PengirimanTest extends TestCase
         return User::create(['name' => ucfirst($role).' '.$email, 'email' => $email, 'password' => 'password', 'role' => $role, 'is_active' => true]);
     }
 
-    /** Pesanan pembeli berisi satu produk milik $farmer. */
     private function order(User $farmer, string $status = 'pending', string $method = 'cod'): Order
     {
         $p = Product::create(['user_id' => $farmer->id, 'category_id' => $this->cat->id, 'name' => 'P'.uniqid(),
@@ -79,7 +75,6 @@ class PengirimanTest extends TestCase
         $this->assertSame('RESI123', $order->tracking_number);
         $this->assertNotNull($order->shipped_at);
 
-        // Ubah resi setelah dikirim tidak mengubah status pesanan.
         $this->put("/petani/pengiriman/{$order->id}", ['courier' => 'JNE', 'tracking_number' => 'RESI999']);
         $this->assertSame('dikirim', $order->fresh()->status);
 

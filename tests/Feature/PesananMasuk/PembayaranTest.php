@@ -13,9 +13,6 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
-/**
- * Anggota 4: konfirmasi/penolakan pembayaran oleh petani.
- */
 class PembayaranTest extends TestCase
 {
     use RefreshDatabase;
@@ -45,7 +42,6 @@ class PembayaranTest extends TestCase
             'slug' => str($name)->slug().'-'.$farmer->id, 'price' => 5000, 'stock' => $stock, 'unit' => 'kg', 'is_active' => true]);
     }
 
-    /** Pesanan pembeli berisi satu produk milik $farmer. */
     private function order(User $farmer, string $status = 'pending', string $method = 'transfer', ?string $proof = null, int $qty = 2): Order
     {
         $p = $this->product($farmer, 'P'.uniqid());

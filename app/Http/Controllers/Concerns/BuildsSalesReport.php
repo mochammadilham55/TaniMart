@@ -8,11 +8,6 @@ use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-/**
- * Logika laporan penjualan yang dipakai bersama oleh laporan petani (anggota 4)
- * dan laporan admin (anggota 1). Petani hanya melihat produk miliknya ($farmerId),
- * admin melihat seluruh pesanan ($farmerId = null).
- */
 trait BuildsSalesReport
 {
     protected function salesReport(Request $request, ?int $farmerId): array
@@ -37,7 +32,6 @@ trait BuildsSalesReport
             ->oldest()
             ->get();
 
-        // Satu baris per pesanan. Untuk petani, hanya item miliknya yang dihitung.
         $rows = $orders->map(function (Order $order) use ($farmerId) {
             $items = $farmerId
                 ? $order->items->filter(fn ($i) => $i->product->user_id === $farmerId)
@@ -83,8 +77,8 @@ trait BuildsSalesReport
     {
         return response()->streamDownload(function () use ($report) {
             $out = fopen('php://output', 'w');
-            fwrite($out, "\xEF\xBB\xBF"); // BOM supaya Excel membaca UTF-8
-            fwrite($out, "sep=;\n");       // Excel regional Indonesia memakai titik koma sebagai pemisah kolom
+            fwrite($out, "\xEF\xBB\xBF");
+            fwrite($out, "sep=;\n");
 
             $write = fn (array $cells) => fputcsv($out, $cells, ';');
 
