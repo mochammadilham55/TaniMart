@@ -64,7 +64,7 @@ class ProductController extends Controller
     {
         $this->authorizeOwner($product);
 
-        $data = $this->validated($request); // slug sengaja tidak diubah agar tautan lama tetap valid
+        $data = $this->validated($request);
 
         if ($request->hasFile('image')) {
             if ($product->image) {
@@ -78,7 +78,6 @@ class ProductController extends Controller
         return redirect()->route('petani.products.index')->with('success', 'Produk diperbarui.');
     }
 
-    /** Aktifkan / nonaktifkan produk (tidak menghapus data). */
     public function toggle(Product $product): RedirectResponse
     {
         $this->authorizeOwner($product);
@@ -88,10 +87,9 @@ class ProductController extends Controller
         return back()->with('success', $product->is_active ? 'Produk diaktifkan.' : 'Produk dinonaktifkan.');
     }
 
-    /** Aturan validasi ada di App\Http\Requests\ProductRequest. */
     private function validated(ProductRequest $request): array
     {
-        $data = $request->safe()->except('image'); // foto ditangani terpisah
+        $data = $request->safe()->except('image');
         $data['is_active'] = $request->boolean('is_active');
 
         return $data;
