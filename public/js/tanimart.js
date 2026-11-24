@@ -61,6 +61,17 @@ $(function () {
     });
 });
 
+// Tampilkan info rekening hanya saat metode transfer dipilih di checkout.
+$(function () {
+    var $info = $('#transfer-info');
+    if (!$info.length) return;
+    function sync() {
+        $info.toggleClass('d-none', $('input[name=method]:checked').val() !== 'transfer');
+    }
+    $('input[name=method]').on('change', sync);
+    sync();
+});
+
 // Tombol "Hubungi Admin via WhatsApp": sisipkan email yang diketik ke pesan otomatis.
 $(function () {
     var $wa = $('#wa-admin');

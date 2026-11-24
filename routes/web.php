@@ -27,3 +27,5 @@ Route::get('/dashboard', fn () => redirect()->route(auth()->user()->role.'.dashb
 // Route per modul/anggota.
 require __DIR__.'/modules/1-akun-admin.php';
 require __DIR__.'/modules/2-produk.php';
+require __DIR__.'/modules/3-belanja.php';
+require __DIR__.'/modules/4-pesanan-masuk.php';
