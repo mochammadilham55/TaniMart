@@ -24,8 +24,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->n
 Route::get('/dashboard', fn () => redirect()->route(auth()->user()->role.'.dashboard'))
     ->middleware('auth')->name('dashboard');
 
-// Sementara: beranda diarahkan ke login sampai katalog (route 'home') ditambahkan.
-Route::redirect('/', '/login')->name('home');
-
 // Route per modul/anggota.
 require __DIR__.'/modules/1-akun-admin.php';
+require __DIR__.'/modules/2-produk.php';
