@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Password;
 use Tests\TestCase;
 
-/**
- * Anggota 1: lupa password (minta tautan lewat email, lalu atur password baru).
- */
 class LupaPasswordTest extends TestCase
 {
     use RefreshDatabase;
@@ -76,7 +73,6 @@ class LupaPasswordTest extends TestCase
 
         $this->assertTrue(Hash::check('passwordbaru1', $user->fresh()->password));
 
-        // Token hanya berlaku sekali.
         $this->post('/reset-password', [
             'token' => $token, 'email' => $user->email,
             'password' => 'lainnya12345', 'password_confirmation' => 'lainnya12345',

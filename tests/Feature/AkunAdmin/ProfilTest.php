@@ -7,9 +7,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
-/**
- * Anggota 1: profil pengguna (data diri dan foto) untuk semua role.
- */
 class ProfilTest extends TestCase
 {
     use RefreshDatabase;

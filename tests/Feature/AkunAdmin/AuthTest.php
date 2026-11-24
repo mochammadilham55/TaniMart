@@ -26,7 +26,6 @@ class AuthTest extends TestCase
 
     public function test_every_password_field_has_a_show_password_button(): void
     {
-        // login: 1 field, register: 2, reset: 2, profil: 3 (saat ini, baru, konfirmasi).
         foreach (['/login' => 1, '/register' => 2, '/reset-password/abc' => 2] as $url => $count) {
             $html = $this->get($url)->assertOk()->getContent();
             $this->assertSame($count, substr_count($html, 'aria-label="Tampilkan password"'), $url);

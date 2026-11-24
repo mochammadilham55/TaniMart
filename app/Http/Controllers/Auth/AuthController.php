@@ -69,7 +69,6 @@ class AuthController extends Controller
             unset($data['bank_name'], $data['bank_account_number'], $data['bank_account_name']);
         }
 
-        // Petani harus diverifikasi admin dulu; pembeli langsung aktif.
         $user = User::create($data + ['is_active' => $data['role'] === User::ROLE_PEMBELI]);
 
         if (! $user->is_active) {

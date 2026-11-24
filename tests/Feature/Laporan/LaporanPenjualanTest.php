@@ -10,9 +10,6 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-/**
- * Laporan penjualan: petani (anggota 4) dan admin (anggota 1).
- */
 class LaporanPenjualanTest extends TestCase
 {
     use RefreshDatabase;
@@ -37,7 +34,6 @@ class LaporanPenjualanTest extends TestCase
         $mine = Product::create(['user_id' => $this->farmer->id, 'category_id' => $cat->id, 'name' => 'Bayam', 'slug' => 'bayam', 'price' => 5000, 'stock' => 9]);
         $theirs = Product::create(['user_id' => $this->other->id, 'category_id' => $cat->id, 'name' => 'Kol', 'slug' => 'kol', 'price' => 7000, 'stock' => 9]);
 
-        // Pesanan selesai milik petani (2 × 5000), pesanan selesai petani lain (3 × 7000), dan satu dibatalkan.
         $this->order($mine, 2, 'selesai');
         $this->order($theirs, 3, 'selesai');
         $this->order($mine, 1, 'dibatalkan');
@@ -56,7 +52,7 @@ class LaporanPenjualanTest extends TestCase
         $this->actingAs($this->farmer)->get(route('petani.reports.index'))
             ->assertOk()
             ->assertSee('Laporan Penjualan')
-            ->assertSee('Rp 10.000')      // pendapatan: 2 × 5000 dari pesanan selesai
+            ->assertSee('Rp 10.000')
             ->assertSee('Bayam')
             ->assertDontSee('Kol');
     }
@@ -65,7 +61,7 @@ class LaporanPenjualanTest extends TestCase
     {
         $this->actingAs($this->admin)->get(route('admin.reports.index'))
             ->assertOk()
-            ->assertSee('Rp 31.000')      // 10.000 + 21.000
+            ->assertSee('Rp 31.000')
             ->assertSee('Bayam')
             ->assertSee('Kol');
     }
@@ -87,7 +83,7 @@ class LaporanPenjualanTest extends TestCase
         $csv = $response->streamedContent();
         $this->assertStringContainsString('Bayam x2', $csv);
         $this->assertStringContainsString("sep=;
-", $csv);                 // Excel regional Indonesia
+", $csv);
         $this->assertStringContainsString('"No. Pesanan";Tanggal;Pembeli;Produk;Status;"Total (Rp)"', $csv);
         $this->assertStringNotContainsString('Kol', $csv);
     }

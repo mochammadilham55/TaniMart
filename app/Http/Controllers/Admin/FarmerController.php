@@ -25,7 +25,6 @@ class FarmerController extends Controller
         return view('admin.farmers.index', ['farmers' => $farmers]);
     }
 
-    /** Verifikasi (aktifkan) atau tangguhkan akun petani. */
     public function toggle(User $user): RedirectResponse
     {
         abort_unless($user->role === User::ROLE_PETANI, 404);
