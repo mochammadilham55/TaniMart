@@ -89,4 +89,20 @@ class Order extends Model
             }
         });
     }
+
+    /** Tanggal pesanan dikirim akan selesai otomatis (null jika belum dikirim). */
+    public function autoCompleteAt(): ?Carbon
+    {
+        return $this->status === self::STATUS_DIKIRIM && $this->shipped_at
+            ? $this->shipped_at->copy()->addDays(config('tanimart.auto_complete_days'))
+            : null;
+    }
+
+    /** Pesanan dikirim yang sudah melewati batas hari tanpa konfirmasi pembeli. */
+    public function scopeReadyToAutoComplete(Builder $query): Builder
+    {
+        return $query->where('status', self::STATUS_DIKIRIM)
+            ->whereNotNull('shipped_at')
+            ->where('shipped_at', '<=', now()->subDays(config('tanimart.auto_complete_days')));
+    }
 }
