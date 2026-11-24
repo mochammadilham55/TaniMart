@@ -6,7 +6,6 @@
 </head>
 <body>
     <div class="d-md-flex min-vh-100">
-        {{-- Sidebar: laci geser di layar kecil, tetap tampil di layar >= md --}}
         <aside class="sidebar offcanvas-md offcanvas-start" tabindex="-1" id="sidebar" aria-label="Menu utama">
             <div class="sidebar-panel bg-brand-dark h-100 w-100">
                 <div class="d-flex align-items-center justify-content-between px-4 pt-4 pb-2">
@@ -18,7 +17,6 @@
         </aside>
 
         <div class="flex-grow-1 min-w-0">
-            {{-- Topbar --}}
             <header class="topbar sticky-top d-flex align-items-center justify-content-between bg-white border-bottom px-3 px-md-4">
                 <div class="d-flex align-items-center gap-3">
                     <button type="button" class="btn btn-outline-secondary btn-sm d-md-none" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Buka menu">Menu</button>

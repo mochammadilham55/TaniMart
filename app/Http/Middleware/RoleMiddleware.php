@@ -8,10 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RoleMiddleware
 {
-    /**
-     * Pemakaian: ->middleware('role:admin') atau 'role:petani,admin'.
-     * Akun yang ditangguhkan (is_active = false) akan di-logout.
-     */
     public function handle(Request $request, Closure $next, string ...$roles): Response
     {
         $user = $request->user();

@@ -1,6 +1,4 @@
 @php
-    // Struktur menu per role. Item tanpa route terdaftar tampil nonaktif ("segera").
-    // Format: ['label', 'route.name'] atau ['section' => 'Judul'].
     $menus = [
         'pembeli' => [
             ['Dashboard', 'pembeli.dashboard'],
@@ -41,7 +39,6 @@
             @php
                 [$label, $route] = $item;
                 $exists = Route::has($route);
-                // Dashboard aktif hanya di halamannya sendiri; menu lain aktif juga di sub-halamannya.
                 $active = $exists && (\Illuminate\Support\Str::endsWith($route, '.dashboard')
                     ? request()->routeIs($route)
                     : request()->routeIs($route, \Illuminate\Support\Str::beforeLast($route, '.').'.*'));

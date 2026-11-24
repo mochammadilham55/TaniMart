@@ -1,12 +1,4 @@
-/*
- * Skrip jQuery Tanimart (dimuat setelah jquery.min.js di semua layout).
- *  1. Tombol "Lihat" password          → [data-toggle-password]
- *  2. Preview foto sebelum diunggah    → input[type=file][data-preview="#id-img"]
- *  3. Pencarian langsung pada tabel    → input[data-filter-table="#id-tabel"]
- *  4. Tombol cetak laporan             → [data-print]
- */
 $(function () {
-    // 1. Tampilkan / sembunyikan isi password.
     $(document).on('click', '[data-toggle-password]', function () {
         var $input = $(this).siblings('input');
         var show = $input.attr('type') === 'password';
@@ -20,7 +12,6 @@ $(function () {
             });
     });
 
-    // 2. Preview gambar yang dipilih di input file.
     $('input[type=file][data-preview]').on('change', function () {
         var file = this.files && this.files[0];
         var $target = $($(this).data('preview'));
@@ -37,7 +28,6 @@ $(function () {
         reader.readAsDataURL(file);
     });
 
-    // 3. Saring baris tabel sambil mengetik (tanpa reload halaman).
     $('input[data-filter-table]').on('input', function () {
         var keyword = $(this).val().toLowerCase();
 
@@ -46,13 +36,11 @@ $(function () {
         });
     });
 
-    // 4. Cetak halaman (CSS @media print menyembunyikan menu dan filter).
     $(document).on('click', '[data-print]', function () {
         window.print();
     });
 });
 
-// Tampilkan isian rekening hanya saat mendaftar sebagai petani.
 $(function () {
     var $bank = $('#bank-fields');
     if (!$bank.length) return;
@@ -61,7 +49,6 @@ $(function () {
     });
 });
 
-// Tampilkan info rekening hanya saat metode transfer dipilih di checkout.
 $(function () {
     var $info = $('#transfer-info');
     if (!$info.length) return;
@@ -72,7 +59,6 @@ $(function () {
     sync();
 });
 
-// Tombol "Hubungi Admin via WhatsApp": sisipkan email yang diketik ke pesan otomatis.
 $(function () {
     var $wa = $('#wa-admin');
     if (!$wa.length) return;
@@ -85,7 +71,6 @@ $(function () {
     sync();
 });
 
-// Tombol salin (mis. password sementara di Kelola Pengguna).
 $(document).on('click', '[data-copy]', function () {
     var $btn = $(this);
     var text = $($btn.data('copy')).text().trim();
