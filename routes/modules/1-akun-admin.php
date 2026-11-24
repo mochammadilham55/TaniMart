@@ -29,7 +29,17 @@ Route::middleware('auth')->group(function () {
     Route::put('/profil/password', [ProfileController::class, 'password'])->name('profile.password');
 
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/dashboard', Admin\DashboardController::class)->name('dashboard');
+
+        Route::get('/petani', [Admin\FarmerController::class, 'index'])->name('farmers.index');
+        Route::patch('/petani/{user}/toggle', [Admin\FarmerController::class, 'toggle'])->name('farmers.toggle');
+
         Route::get('/pengguna', [Admin\UserController::class, 'index'])->name('users.index');
         Route::patch('/pengguna/{user}/reset-password', [Admin\UserController::class, 'resetPassword'])->name('users.reset-password');
+
+        Route::get('/laporan', [Admin\ReportController::class, 'index'])->name('reports.index');
+
+        Route::get('/pesanan', [Admin\OrderController::class, 'index'])->name('orders.index');
+        Route::get('/pesanan/{order}', [Admin\OrderController::class, 'show'])->name('orders.show');
     });
 });
