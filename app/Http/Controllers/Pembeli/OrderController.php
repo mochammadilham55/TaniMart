@@ -59,13 +59,12 @@ class OrderController extends Controller
 
         $payment->update([
             'proof_image' => $request->file('proof_image')->store('payment-proofs', 'public'),
-            'status' => Payment::STATUS_MENUNGGU, // diajukan ulang setelah ditolak
+            'status' => Payment::STATUS_MENUNGGU,
         ]);
 
         return back()->with('success', 'Bukti pembayaran terkirim. Menunggu konfirmasi petani.');
     }
 
-    /** Batalkan pesanan yang belum diproses; stok dikembalikan. */
     public function cancel(Order $order): RedirectResponse
     {
         $this->authorizeOwner($order);
@@ -80,7 +79,6 @@ class OrderController extends Controller
             }
             $order->update(['status' => Order::STATUS_DIBATALKAN]);
 
-            // COD belum dibayar, jadi pembayarannya ikut ditutup.
             if ($order->payment?->method === 'cod') {
                 $order->payment->update(['status' => Payment::STATUS_DITOLAK]);
             }
@@ -89,7 +87,6 @@ class OrderController extends Controller
         return back()->with('success', 'Pesanan dibatalkan.');
     }
 
-    /** Pembeli menandai pesanan yang dikirim sebagai diterima. */
     public function complete(Order $order): RedirectResponse
     {
         $this->authorizeOwner($order);
@@ -98,7 +95,7 @@ class OrderController extends Controller
             return back()->with('error', 'Pesanan belum dalam status Dikirim.');
         }
 
-        $order->markCompleted(); // COD ikut dikonfirmasi, lihat Order::markCompleted()
+        $order->markCompleted();
 
         return back()->with('success', 'Terima kasih! Pesanan ditandai selesai.');
     }

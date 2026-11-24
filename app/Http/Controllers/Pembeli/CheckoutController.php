@@ -50,7 +50,6 @@ class CheckoutController extends Controller
             return redirect()->route('pembeli.cart.index')->with('error', $e->getMessage());
         }
 
-        // Satu pesanan transfer -> langsung ke halaman upload bukti.
         if ($orders->count() === 1) {
             return redirect()->route('pembeli.orders.show', $orders->first())
                 ->with('success', 'Pesanan berhasil dibuat.'.($data['method'] === 'transfer' ? ' Silakan upload bukti pembayaran.' : ''));
@@ -60,7 +59,6 @@ class CheckoutController extends Controller
             ->with('success', "Pesanan berhasil dibuat ({$orders->count()} pesanan, satu per petani).");
     }
 
-    /** Buat satu pesanan per petani, kurangi stok, kosongkan keranjang. */
     private function placeOrders($user, array $data)
     {
         $carts = $user->carts()->get();
@@ -68,7 +66,6 @@ class CheckoutController extends Controller
             throw new DomainException('Keranjang Anda kosong.');
         }
 
-        // Kunci baris produk agar stok tidak diperebutkan checkout lain.
         $products = Product::whereIn('id', $carts->pluck('product_id'))->lockForUpdate()->get()->keyBy('id');
 
         foreach ($carts as $cart) {
@@ -98,7 +95,7 @@ class CheckoutController extends Controller
                 $order->items()->create([
                     'product_id' => $p->id,
                     'quantity' => $c->quantity,
-                    'price' => $p->price, // harga dibekukan saat checkout
+                    'price' => $p->price,
                     'subtotal' => $p->price * $c->quantity,
                 ]);
                 $p->decrement('stock', $c->quantity);

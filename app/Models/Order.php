@@ -57,13 +57,11 @@ class Order extends Model
         return $status ? $query->where('status', $status) : $query;
     }
 
-    /** Pesanan yang berisi produk milik petani tertentu. */
     public function scopeForFarmer(Builder $query, int $farmerId): Builder
     {
         return $query->whereHas('items.product', fn ($q) => $q->where('user_id', $farmerId));
     }
 
-    /** total_price hanya subtotal barang; yang dibayar pembeli = barang + ongkir. */
     public function grandTotal(): float
     {
         return (float) $this->total_price + (float) $this->shipping_cost;
@@ -74,11 +72,6 @@ class Order extends Model
         return $this->status === self::STATUS_SELESAI;
     }
 
-    /**
-     * Tandai pesanan selesai. Dipakai saat pembeli menekan "Pesanan Diterima"
-     * dan saat selesai otomatis. COD dibayar saat barang diterima, jadi
-     * pembayarannya ikut dikonfirmasi.
-     */
     public function markCompleted(): void
     {
         DB::transaction(function () {
@@ -90,7 +83,6 @@ class Order extends Model
         });
     }
 
-    /** Tanggal pesanan dikirim akan selesai otomatis (null jika belum dikirim). */
     public function autoCompleteAt(): ?Carbon
     {
         return $this->status === self::STATUS_DIKIRIM && $this->shipped_at
@@ -98,7 +90,6 @@ class Order extends Model
             : null;
     }
 
-    /** Pesanan dikirim yang sudah melewati batas hari tanpa konfirmasi pembeli. */
     public function scopeReadyToAutoComplete(Builder $query): Builder
     {
         return $query->where('status', self::STATUS_DIKIRIM)

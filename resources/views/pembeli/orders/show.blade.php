@@ -12,7 +12,6 @@
 
     <a href="{{ route('pembeli.orders.index') }}" class="small text-secondary">← Semua pesanan</a>
 
-    {{-- Timeline status --}}
     <div class="card mt-3">
         <div class="card-body">
             @if ($order->status === 'dibatalkan')

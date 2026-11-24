@@ -12,9 +12,6 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
-/**
- * Anggota 3: upload bukti transfer oleh pembeli (validasi, penyimpanan, COD).
- */
 class BuktiBayarTest extends TestCase
 {
     use RefreshDatabase;
