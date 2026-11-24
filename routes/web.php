@@ -1,7 +1,31 @@
 <?php
 
+/*
+|--------------------------------------------------------------------------
+| Routes inti (login, register, logout, pengalihan dashboard)
+|--------------------------------------------------------------------------
+| Route fitur dipecah per anggota di routes/modules/. Ubah file inti ini
+| hanya setelah disepakati bersama (lihat PEMBAGIAN_TUGAS.md).
+*/
+
+use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
 });
+
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+
+// Arahkan ke dashboard sesuai role.
+Route::get('/dashboard', fn () => redirect()->route(auth()->user()->role.'.dashboard'))
+    ->middleware('auth')->name('dashboard');
+
+// Sementara: beranda diarahkan ke login sampai katalog (route 'home') ditambahkan.
+Route::redirect('/', '/login')->name('home');
+
+// Route per modul/anggota.
+require __DIR__.'/modules/1-akun-admin.php';
