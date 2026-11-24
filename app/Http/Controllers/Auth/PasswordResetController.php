@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password as PasswordRule;
 
-/** Lupa password: minta tautan lewat email, lalu atur password baru dari tautan itu. */
 class PasswordResetController extends Controller
 {
     public function showForgot()
@@ -18,7 +17,6 @@ class PasswordResetController extends Controller
         return view('auth.forgot-password');
     }
 
-    /** Kirim tautan reset. Pesan sama untuk email terdaftar maupun tidak, agar email tidak bisa ditebak. */
     public function sendLink(Request $request): RedirectResponse
     {
         $request->validate(['email' => ['required', 'email']]);
@@ -43,7 +41,7 @@ class PasswordResetController extends Controller
 
         $status = Password::reset($data, function ($user, string $password) {
             $user->forceFill([
-                'password' => $password, // di-hash otomatis oleh cast
+                'password' => $password,
                 'remember_token' => Str::random(60),
             ])->save();
 

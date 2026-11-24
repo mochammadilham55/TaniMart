@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /** Foto profil tidak ditampilkan di mana pun, jadi kolomnya dihapus. */
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {

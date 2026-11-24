@@ -11,9 +11,6 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-/**
- * Anggota 1: daftar dan detail pesanan di sisi admin (filter, pencarian).
- */
 class PesananAdminTest extends TestCase
 {
     use RefreshDatabase;

@@ -8,9 +8,6 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-/**
- * Anggota 2: admin mengelola kategori produk.
- */
 class KategoriTest extends TestCase
 {
     use RefreshDatabase;
@@ -46,7 +43,7 @@ class KategoriTest extends TestCase
 
         $this->post('/admin/kategori', ['name' => 'Buah Segar'])->assertSessionHas('success');
         $this->post('/admin/kategori', ['name' => 'Buah Segar'])->assertSessionHasErrors('name');
-        $this->post('/admin/kategori', ['name' => 'Buah  Segar!'])->assertSessionHas('success'); // slug bentrok -> -2
+        $this->post('/admin/kategori', ['name' => 'Buah  Segar!'])->assertSessionHas('success');
         $this->assertSame(['buah-segar', 'buah-segar-2'], Category::where('slug', 'like', 'buah%')->orderBy('id')->pluck('slug')->all());
 
         $c = Category::where('slug', 'buah-segar')->first();
@@ -55,8 +52,8 @@ class KategoriTest extends TestCase
         $this->assertSame('Buah Pilihan', $c->fresh()->name);
         $this->assertSame('buah-segar', $c->fresh()->slug);
 
-        $this->put("/admin/kategori/{$c->slug}", ['name' => 'Sayur'])->assertSessionHasErrors('name'); // nama milik kategori lain
-        $this->put("/admin/kategori/{$c->slug}", ['name' => 'Buah Pilihan'])->assertSessionHasNoErrors(); // nama sendiri boleh
+        $this->put("/admin/kategori/{$c->slug}", ['name' => 'Sayur'])->assertSessionHasErrors('name');
+        $this->put("/admin/kategori/{$c->slug}", ['name' => 'Buah Pilihan'])->assertSessionHasNoErrors();
     }
 
     public function test_cannot_delete_category_in_use_but_can_delete_empty(): void

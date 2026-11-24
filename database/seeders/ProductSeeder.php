@@ -17,7 +17,6 @@ class ProductSeeder extends Seeder
             return;
         }
 
-        // [nama, kategori, harga, stok, satuan, berat(gram)]
         $products = [
             ['Bayam Hijau', 'Sayuran', 5000, 50, 'ikat', 250],
             ['Kangkung', 'Sayuran', 4000, 8, 'ikat', 250],

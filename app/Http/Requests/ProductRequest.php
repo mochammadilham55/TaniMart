@@ -4,17 +4,10 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-/**
- * Anggota 2 — validasi form produk (tambah dan ubah memakai aturan yang sama).
- * Alur: request masuk → ProductRequest memvalidasi → controller menyimpan → redirect.
- * Jika gagal, Laravel otomatis kembali ke form membawa pesan error.
- */
 class ProductRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        // Peran sudah dijaga middleware role:petani. Saat mengubah, produk harus milik sendiri
-        // (dicek di sini karena authorize() berjalan sebelum validasi).
         $product = $this->route('product');
         abort_if($product && $product->user_id !== $this->user()->id, 404);
 

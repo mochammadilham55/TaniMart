@@ -1,13 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| ANGGOTA 3 — Belanja (Keranjang, Checkout, Pesanan Pembeli)
-|--------------------------------------------------------------------------
-| Semua fitur pembeli: dashboard, keranjang, checkout, daftar pesanan,
-| upload bukti transfer, batalkan pesanan, dan konfirmasi pesanan diterima.
-*/
-
 use App\Http\Controllers\Pembeli;
 use Illuminate\Support\Facades\Route;
 

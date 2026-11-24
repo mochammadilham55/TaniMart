@@ -54,7 +54,6 @@ class PaymentController extends Controller
             ->with('order')->findOrFail($id);
     }
 
-    /** Pesan error bila pembayaran tidak boleh diproses saat ini, atau null. */
     private function blocked(Payment $payment, bool $requireProof): ?string
     {
         if ($payment->method === 'cod') {

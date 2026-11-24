@@ -10,9 +10,6 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-/**
- * Anggota 4: dashboard petani dan admin (statistik hanya dari data milik sendiri).
- */
 class DashboardTest extends TestCase
 {
     use RefreshDatabase;

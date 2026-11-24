@@ -8,10 +8,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-/**
- * Anggota 1: daftar semua pembeli dan petani, serta reset password oleh admin
- * (dipakai saat pengguna menghubungi admin lewat WhatsApp karena lupa password).
- */
 class UserController extends Controller
 {
     public function index(Request $request)
@@ -31,7 +27,6 @@ class UserController extends Controller
         return view('admin.users.index', ['users' => $users]);
     }
 
-    /** Buat password sementara. Ditampilkan sekali ke admin; pengguna wajib menggantinya saat login. */
     public function resetPassword(User $user): RedirectResponse
     {
         abort_if($user->isAdmin(), 404);
@@ -39,7 +34,7 @@ class UserController extends Controller
         $temporary = 'Tani-'.Str::upper(Str::random(4)).random_int(1000, 9999);
 
         $user->forceFill([
-            'password' => $temporary, // di-hash otomatis oleh cast
+            'password' => $temporary,
             'must_change_password' => true,
             'remember_token' => Str::random(60),
         ])->save();

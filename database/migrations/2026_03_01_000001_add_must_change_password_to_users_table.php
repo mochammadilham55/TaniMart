@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /** Penanda pengguna memakai password sementara dari admin dan wajib menggantinya. */
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {

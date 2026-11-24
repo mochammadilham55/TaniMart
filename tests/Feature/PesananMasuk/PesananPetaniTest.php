@@ -11,9 +11,6 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-/**
- * Anggota 4: pesanan masuk di sisi petani (konfirmasi, tolak, kepemilikan).
- */
 class PesananPetaniTest extends TestCase
 {
     use RefreshDatabase;
@@ -43,7 +40,6 @@ class PesananPetaniTest extends TestCase
             'slug' => str($name)->slug().'-'.$farmer->id, 'price' => 5000, 'stock' => $stock, 'unit' => 'kg', 'is_active' => true]);
     }
 
-    /** Pesanan pembeli berisi satu produk milik $farmer. */
     private function order(User $farmer, string $status = 'pending', string $method = 'transfer', ?string $proof = null, int $qty = 2): Order
     {
         $p = $this->product($farmer, 'P'.uniqid());

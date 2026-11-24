@@ -10,9 +10,6 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-/**
- * Anggota 1: admin mengelola petani (aktifkan/nonaktifkan) dan dampaknya ke katalog.
- */
 class AdminPetaniProdukTest extends TestCase
 {
     use RefreshDatabase;

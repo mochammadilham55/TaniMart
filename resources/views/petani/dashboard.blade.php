@@ -4,7 +4,6 @@
 @section('heading', 'Dashboard')
 
 @section('content')
-    {{-- Keputusan utama petani di halaman ini: pesanan mana yang harus diproses sekarang. --}}
     @if ($newOrders > 0)
         <div class="card border-warning mb-4">
             <div class="card-body d-flex flex-wrap align-items-center justify-content-between gap-3">

@@ -6,7 +6,6 @@ use App\Http\Controllers\Concerns\BuildsSalesReport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-/** Anggota 4 — laporan penjualan milik petani yang sedang login. */
 class ReportController extends Controller
 {
     use BuildsSalesReport;

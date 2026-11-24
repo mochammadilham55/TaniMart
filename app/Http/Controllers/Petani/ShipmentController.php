@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class ShipmentController extends Controller
 {
-    /** Pesanan yang siap dikirim (Diproses) atau sudah dikirim (resi masih bisa diubah). */
     public function index()
     {
         $orders = Order::forFarmer(auth()->id())
@@ -21,7 +20,6 @@ class ShipmentController extends Controller
         return view('petani.shipments.index', ['orders' => $orders]);
     }
 
-    /** Isi / ubah resi. Pertama kali diisi: pesanan menjadi Dikirim. */
     public function update(Request $request, int $id): RedirectResponse
     {
         $order = Order::forFarmer(auth()->id())->findOrFail($id);

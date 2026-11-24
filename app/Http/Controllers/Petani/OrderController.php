@@ -30,7 +30,6 @@ class OrderController extends Controller
         return view('petani.orders.show', ['order' => $order]);
     }
 
-    /** Terima pesanan: pending -> diproses (transfer harus sudah dikonfirmasi pembayarannya). */
     public function confirm(int $id): RedirectResponse
     {
         $order = $this->findOrder($id)->load('payment');
@@ -48,7 +47,6 @@ class OrderController extends Controller
         return back()->with('success', 'Pesanan dikonfirmasi dan siap dikemas.');
     }
 
-    /** Tolak pesanan: pending -> dibatalkan, stok dikembalikan. */
     public function reject(int $id): RedirectResponse
     {
         $order = $this->findOrder($id);
@@ -63,7 +61,6 @@ class OrderController extends Controller
             }
             $order->update(['status' => Order::STATUS_DIBATALKAN]);
 
-            // COD belum dibayar, jadi pembayarannya ikut ditutup.
             if ($order->payment?->method === 'cod') {
                 $order->payment->update(['status' => Payment::STATUS_DITOLAK]);
             }

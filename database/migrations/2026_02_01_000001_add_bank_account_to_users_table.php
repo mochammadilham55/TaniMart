@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /** Rekening tujuan transfer milik petani, ditampilkan ke pembeli saat checkout. */
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {

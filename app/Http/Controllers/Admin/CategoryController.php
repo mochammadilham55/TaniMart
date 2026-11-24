@@ -49,7 +49,7 @@ class CategoryController extends Controller
             $data['image'] = $request->file('image')->store('categories', 'public');
         }
 
-        $category->update($data); // slug tetap agar URL filter lama tidak rusak
+        $category->update($data);
 
         return redirect()->route('admin.categories.index')->with('success', 'Kategori diperbarui.');
     }

@@ -33,17 +33,15 @@ class ProfileController extends Controller
             'bank_account_name.required' => 'Nama pemilik rekening wajib diisi untuk petani.',
         ]);
 
-        // Pembeli dan admin tidak menyimpan data rekening.
         if (! $user->isPetani()) {
             unset($data['bank_name'], $data['bank_account_number'], $data['bank_account_name']);
         }
 
-        $user->update($data); // role & is_active tidak ada di $data, jadi tidak bisa diubah dari sini
+        $user->update($data);
 
         return back()->with('success', 'Profil diperbarui.');
     }
 
-    /** Ubah password: wajib mengisi password saat ini. */
     public function password(Request $request): RedirectResponse
     {
         $data = $request->validate([

@@ -10,9 +10,6 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
-/**
- * Anggota 2: produk milik petani (tambah, ubah, aktif/nonaktif, kepemilikan).
- */
 class ProdukPetaniTest extends TestCase
 {
     use RefreshDatabase;
@@ -84,7 +81,7 @@ class ProdukPetaniTest extends TestCase
         $p->refresh();
         $this->assertSame('Nama Baru', $p->name);
         $this->assertStringStartsWith('bayam', $p->slug);
-        $this->assertFalse($p->is_active); // checkbox tidak dikirim -> nonaktif
+        $this->assertFalse($p->is_active);
 
         $this->patch("/petani/produk/{$p->slug}/toggle");
         $this->assertTrue($p->fresh()->is_active);

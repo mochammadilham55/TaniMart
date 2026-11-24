@@ -7,10 +7,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
-/**
- * Anggota 1: tombol "Hubungi Admin via WhatsApp", reset password oleh admin,
- * dan kewajiban mengganti password sementara.
- */
 class ResetOlehAdminTest extends TestCase
 {
     use RefreshDatabase;

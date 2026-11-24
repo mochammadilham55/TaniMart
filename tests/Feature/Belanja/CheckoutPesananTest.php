@@ -11,9 +11,6 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-/**
- * Anggota 3: checkout (pecah per petani), pembatalan, konfirmasi terima, dashboard pembeli.
- */
 class CheckoutPesananTest extends TestCase
 {
     use RefreshDatabase;
@@ -140,7 +137,6 @@ class CheckoutPesananTest extends TestCase
         $this->assertSame('dibatalkan', $order->fresh()->status);
         $this->assertSame(10, $p->fresh()->stock);
 
-        // Batal dua kali tidak menambah stok lagi.
         $this->patch("/pembeli/pesanan/{$order->id}/batal")->assertSessionHas('error');
         $this->assertSame(10, $p->fresh()->stock);
     }

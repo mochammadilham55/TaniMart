@@ -43,7 +43,6 @@ class Product extends Model
         return $this->hasMany(Cart::class);
     }
 
-    /** Produk yang tampil & bisa dibeli: aktif dan petaninya aktif. */
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true)
@@ -65,7 +64,6 @@ class Product extends Model
         return $term ? $query->where('name', 'like', "%{$term}%") : $query;
     }
 
-    /** Sort: termurah, termahal, atau terbaru (default). */
     public function scopeSortPrice(Builder $query, ?string $dir): Builder
     {
         return match ($dir) {

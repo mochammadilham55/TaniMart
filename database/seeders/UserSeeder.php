@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
         foreach ($users as [$name, $email, $role, $phone]) {
             User::updateOrCreate(['email' => $email], [
                 'name' => $name,
-                'password' => 'password', // di-hash otomatis oleh cast
+                'password' => 'password',
                 'role' => $role,
                 'phone' => $phone,
                 'address' => 'Jl. Contoh No. 1, Indonesia',

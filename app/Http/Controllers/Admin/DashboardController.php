@@ -11,7 +11,6 @@ class DashboardController extends Controller
 {
     public function __invoke()
     {
-        // Pesanan 7 hari terakhir, per hari (hari kosong tetap tampil = 0).
         $perDay = Order::where('created_at', '>=', today()->subDays(6))
             ->get(['created_at'])
             ->countBy(fn ($o) => $o->created_at->toDateString());

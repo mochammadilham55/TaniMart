@@ -13,7 +13,6 @@ class DashboardController extends Controller
     {
         $farmerId = auth()->id();
 
-        // Item pesanan selesai milik produk petani ini.
         $soldItems = OrderItem::whereHas('product', fn ($q) => $q->where('user_id', $farmerId))
             ->whereHas('order', fn ($q) => $q->where('status', Order::STATUS_SELESAI));
 

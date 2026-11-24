@@ -3,7 +3,6 @@
 @php
     $key = strtolower((string) $status);
 
-    // [background, text] sesuai palet status Tanimart.
     $gray = ['#ECEFEA', '#3F4A40'];
     $amber = ['#FCEFD6', '#7A4B00'];
     $blue = ['#DCEBFA', '#12446E'];

@@ -1,13 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| ANGGOTA 4 — Pesanan Masuk, Pembayaran & Pengiriman (sisi Petani)
-|--------------------------------------------------------------------------
-| Dashboard petani, pesanan masuk (konfirmasi/tolak), konfirmasi bukti
-| pembayaran, dan pengisian resi pengiriman.
-*/
-
 use App\Http\Controllers\Petani;
 use Illuminate\Support\Facades\Route;
 
