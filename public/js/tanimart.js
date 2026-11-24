@@ -1,5 +1,5 @@
 /*
- * Skrip jQuery AgriTani (dimuat setelah jquery.min.js di semua layout).
+ * Skrip jQuery Tanimart (dimuat setelah jquery.min.js di semua layout).
  *  1. Tombol "Lihat" password          → [data-toggle-password]
  *  2. Preview foto sebelum diunggah    → input[type=file][data-preview="#id-img"]
  *  3. Pencarian langsung pada tabel    → input[data-filter-table="#id-tabel"]
@@ -18,23 +18,6 @@ $(function () {
                 'aria-pressed': show,
                 'aria-label': show ? 'Sembunyikan password' : 'Tampilkan password'
             });
-    });
-
-    // 2. Preview gambar yang dipilih di input file.
-    $('input[type=file][data-preview]').on('change', function () {
-        var file = this.files && this.files[0];
-        var $target = $($(this).data('preview'));
-
-        if (!file || !/^image\//.test(file.type)) {
-            $target.addClass('d-none');
-            return;
-        }
-
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            $target.attr('src', e.target.result).removeClass('d-none');
-        };
-        reader.readAsDataURL(file);
     });
 
     // 3. Saring baris tabel sambil mengetik (tanpa reload halaman).
@@ -61,13 +44,26 @@ $(function () {
     });
 });
 
-// Tampilkan info rekening hanya saat metode transfer dipilih di checkout.
+// Tombol "Hubungi Admin via WhatsApp": sisipkan email yang diketik ke pesan otomatis.
 $(function () {
-    var $info = $('#transfer-info');
-    if (!$info.length) return;
+    var $wa = $('#wa-admin');
+    if (!$wa.length) return;
+    var $email = $($wa.data('wa-email-input'));
     function sync() {
-        $info.toggleClass('d-none', $('input[name=method]:checked').val() !== 'transfer');
+        var text = 'Halo Admin Tanimart, saya lupa password akun dengan email: ' + ($email.val() || '');
+        $wa.attr('href', 'https://wa.me/' + $wa.data('wa-number') + '?text=' + encodeURIComponent(text));
     }
-    $('input[name=method]').on('change', sync);
+    $email.on('input', sync);
     sync();
+});
+
+// Tombol salin (mis. password sementara di Kelola Pengguna).
+$(document).on('click', '[data-copy]', function () {
+    var $btn = $(this);
+    var text = $($btn.data('copy')).text().trim();
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(function () {
+            $btn.text('Tersalin');
+        });
+    }
 });

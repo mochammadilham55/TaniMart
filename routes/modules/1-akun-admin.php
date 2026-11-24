@@ -5,10 +5,11 @@
 | ANGGOTA 1 — Akun & Admin
 |--------------------------------------------------------------------------
 | Profil pengguna, dashboard admin, kelola petani (aktif/nonaktif),
-| dan daftar pesanan (hanya lihat) untuk admin.
+| kelola pengguna (reset password oleh admin), dan daftar pesanan (hanya lihat) untuk admin.
 | (Login, register, logout ada di routes/web.php.)
 */
 
+use App\Http\Controllers\Admin;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -26,4 +27,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profil', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profil', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profil/password', [ProfileController::class, 'password'])->name('profile.password');
+
+    Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/pengguna', [Admin\UserController::class, 'index'])->name('users.index');
+        Route::patch('/pengguna/{user}/reset-password', [Admin\UserController::class, 'resetPassword'])->name('users.reset-password');
+    });
 });
