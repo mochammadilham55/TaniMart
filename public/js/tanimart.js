@@ -20,6 +20,23 @@ $(function () {
             });
     });
 
+    // 2. Preview gambar yang dipilih di input file.
+    $('input[type=file][data-preview]').on('change', function () {
+        var file = this.files && this.files[0];
+        var $target = $($(this).data('preview'));
+
+        if (!file || !/^image\//.test(file.type)) {
+            $target.addClass('d-none');
+            return;
+        }
+
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $target.attr('src', e.target.result).removeClass('d-none');
+        };
+        reader.readAsDataURL(file);
+    });
+
     // 3. Saring baris tabel sambil mengetik (tanpa reload halaman).
     $('input[data-filter-table]').on('input', function () {
         var keyword = $(this).val().toLowerCase();
